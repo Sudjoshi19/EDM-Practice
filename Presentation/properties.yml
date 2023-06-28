@@ -1,0 +1,176 @@
+version: 2
+models:
+
+# Presentation
+
+  - name: commissions
+    config:
+      materialized: incremental
+      incremental_strategy: merge
+      unique_key: ['month','year','commission_type','flat_rate','revenue_min','revenue_max']
+        
+  - name: customer
+    config:
+      materialized: incremental
+      incremental_strategy: merge
+      unique_key: ['date','brand_name','email','platform_name','store_name','product_id','product_name','sku','order_id']
+      partition_by: { 'field': 'date', 'data_type': 'date' }
+      cluster_by: ['date','brand_name','email'] 
+
+  - name: campaign_targeting
+    config:
+      materialized: incremental
+      incremental_strategy: merge
+      unique_key: ['date','brand_name','ad_channel','platform_name','store_name','campaign_name','adgroup_name','targeting_type','targeting_text','match_type','search_term']
+      partition_by: { 'field': 'date', 'data_type': 'date' }
+      cluster_by: ['date','brand_name','ad_channel','campaign_name'] 
+
+  - name: inventory
+    config:
+      materialized: incremental
+      incremental_strategy: merge
+      unique_key: ['date','brand_name','event','type','platform_name','store_name','product_id','sku','product_name']
+      partition_by: { 'field': 'date', 'data_type': 'date' }
+      cluster_by: ['date','brand_name','event'] 
+
+  - name: inventory_insights_amazon
+    config:
+      materialized: incremental
+      incremental_strategy: merge
+      unique_key: ['date','brand_name','platform_name','store_name','product_id','sku','product_name']
+      partition_by: { 'field': 'date', 'data_type': 'date' }
+      cluster_by: ['date','brand_name','product_name'] 
+
+  - name: profit_and_loss
+    config:
+      materialized: incremental
+      incremental_strategy: merge
+      unique_key: ['date','brand_name','platform_name','store_name','amount_type','transaction_type','charge_type','sku','product_id']
+      partition_by: { 'field': 'date', 'data_type': 'date' }
+      cluster_by: ['date','brand_name','charge_type'] 
+
+  - name: market_basket_analysis
+    config:
+      materialized: incremental
+      incremental_strategy: merge
+      unique_key: ['date','brand_name','platform_name','order_id','product_name','sku']
+      partition_by: { 'field': 'date', 'data_type': 'date' }
+      cluster_by: ['date','brand_name'] 
+
+  - name: marketing_deepdive
+    config:
+      materialized: incremental
+      incremental_strategy: merge
+      unique_key: ['date','brand_name','ad_channel','campaign_type','platform_name','store_name','product_id','sku','campaign_name','campaign_placement','portfolio_name']
+      partition_by: { 'field': 'date', 'data_type': 'date' }
+      cluster_by: ['date','brand_name','ad_channel','product_id'] 
+
+  - name: marketing_overview
+    config:
+      materialized: incremental
+      incremental_strategy: merge
+      unique_key: ['date','brand_name','ad_channel','platform_name','store_name','portfolio_name']
+      partition_by: { 'field': 'date', 'data_type': 'date' }
+      cluster_by: ['date','brand_name','ad_channel'] 
+
+  - name: product_insights
+    config:
+      materialized: incremental
+      incremental_strategy: merge
+      unique_key: ['date','brand_name','platform_name','store_name','product_id']
+      partition_by: { 'field': 'date', 'data_type': 'date' }
+      cluster_by: ['date','brand_name'] 
+
+  - name: purchase_order_insights
+    config:
+      materialized: incremental
+      incremental_strategy: merge
+      unique_key: ['order_date','brand_name','platform_name','store_name','product_id']
+      partition_by: { 'field': 'order_date', 'data_type': 'date' }
+      cluster_by: ['order_date','brand_name'] 
+
+  - name: sales_channel_analysis
+    config:
+      materialized: incremental
+      incremental_strategy: merge
+      unique_key: ['date','brand_name','platform_name','store_name','order_channel']
+      partition_by: { 'field': 'date', 'data_type': 'date' }
+      cluster_by: ['date','brand_name'] 
+
+  - name: sales_deepdive
+    config:
+      materialized: incremental
+      incremental_strategy: merge
+      unique_key: ['date','brand_name','platform_name','store_name','product_id','sku']
+      partition_by: { 'field': 'date', 'data_type': 'date' }
+      cluster_by: ['date','brand_name'] 
+
+  - name: sales_overview
+    config:
+      materialized: incremental
+      incremental_strategy: merge
+      unique_key: ['date','brand_name','platform_name','store_name']
+      partition_by: { 'field': 'date', 'data_type': 'date' }
+      cluster_by: ['date','brand_name'] 
+
+  - name: subscriptions_overview
+    config:
+      materialized: incremental
+      incremental_strategy: merge
+      unique_key: ['created_at','brand_name','platform_name','store_name','sku','subscription_id']
+      partition_by: { 'field': 'created_at', 'data_type': 'date' }
+      cluster_by: ['created_at','brand_name'] 
+
+  - name: traffic_analysis
+    config:
+      materialized: incremental
+      incremental_strategy: merge
+      unique_key: ['date','product_id','brand_name','platform_name','store_name','event_name','source','medium','campaign','keyword','content','landing_page_path']
+      partition_by: { 'field': 'date', 'data_type': 'date' }
+      cluster_by: ['date','brand_name'] 
+
+  - name: vendor_central
+    config:
+      materialized: incremental
+      incremental_strategy: merge
+      unique_key: ['order_date','brand_name','platform_name','store_name','product_id','distribution_view']
+      partition_by: { 'field': 'order_date', 'data_type': 'date' }
+      cluster_by: ['order_date','brand_name'] 
+
+  - name: date_browser_weekly
+    config:
+      materialized: incremental
+      incremental_strategy: merge
+      unique_key: ['week_start_date','brand_name','platform_name','store_name','product_id','sku']
+      partition_by: { 'field': 'week_start_date', 'data_type': 'date' }
+      cluster_by: ['week_start_date','brand_name'] 
+
+  - name: date_browser_monthly
+    config:
+      materialized: incremental
+      incremental_strategy: merge
+      unique_key: ['month_start_date','brand_name','platform_name','store_name','product_id','sku']
+      partition_by: { 'field': 'month_start_date', 'data_type': 'date' }
+      cluster_by: ['month_start_date','brand_name'] 
+
+  - name: date_browser_yearly
+    config:
+      materialized: incremental
+      incremental_strategy: merge
+      unique_key: ['year_start_date','brand_name','platform_name','store_name','product_id','sku']
+      partition_by: { 'field': 'year_start_date', 'data_type': 'date' }
+      cluster_by: ['year_start_date','brand_name'] 
+
+  - name: date_browser_daily
+    config:
+      materialized: incremental
+      incremental_strategy: merge
+      unique_key: ['date','brand_name','platform_name','store_name','product_id','sku']
+      partition_by: { 'field': 'date', 'data_type': 'date' }
+      cluster_by: ['date','brand_name'] 
+
+  - name: sales_change_analysis
+    config:
+      materialized: incremental
+      incremental_strategy: merge
+      unique_key: ['brand_name','platform_name','store_name','product_id','product_name','sku']
