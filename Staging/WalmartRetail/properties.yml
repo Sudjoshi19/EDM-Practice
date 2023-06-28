@@ -1,0 +1,10 @@
+version: 2
+models:
+
+  - name: WalmartRetailSalesReport
+    config:
+      materialized : incremental
+      incremental_strategy: merge
+      unique_key : ['STORE_NAME','STORE_NBR','UPC','DAILY_REPORT_DATE']
+      partition_by : {'field': 'DAILY_REPORT_DATE', 'data_type': 'date'}
+      cluster_by : ['STORE_NAME','STORE_NBR','UPC','DAILY_REPORT_DATE']
