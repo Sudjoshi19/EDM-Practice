@@ -1,0 +1,10 @@
+version: 2
+models:
+
+  - name: WalmartAds
+    config:
+      materialized : incremental
+      incremental_strategy: merge
+      unique_key : ['Ad_Group_Id','Item_ID','Report_Start_Date_Arg']
+      partition_by : { 'field': 'Date', 'data_type': 'date' }
+      cluster_by : ['Ad_Group_Id','Item_ID','Report_Start_Date_Arg']

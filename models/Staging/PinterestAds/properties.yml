@@ -1,0 +1,60 @@
+version: 2
+models:
+# PinterestAds
+
+  - name: PinterestAdAccountsAnalytics
+    config:
+      materialized: incremental
+      incremental_strategy: merge
+      unique_key: ['AD_ACCOUNT_ID','DATE','CONVERSION_REPORT_TIME']
+      partition_by: { 'field': 'DATE', 'data_type': 'date' }
+      cluster_by: ['AD_ACCOUNT_ID','DATE','CONVERSION_REPORT_TIME'] 
+
+  - name: PinterestAdGroupsAnalytics
+    config:
+      materialized: incremental
+      incremental_strategy: merge
+      unique_key: ['AD_GROUP_ID','DATE','CONVERSION_REPORT_TIME']
+      partition_by: { 'field': 'DATE', 'data_type': 'date' }
+      cluster_by: ['AD_GROUP_ID','DATE','CONVERSION_REPORT_TIME'] 
+
+  - name: PinterestAdGroups
+    config:
+      materialized: incremental
+      incremental_strategy: merge
+      unique_key: ['ad_group_id','created_time']
+      partition_by: { 'field': 'created_time', 'data_type': 'timestamp', 'granularity': 'day' }
+      cluster_by: ['ad_group_id','created_time'] 
+
+  - name: PinterestAdsAnalytics
+    config:
+      materialized: incremental
+      incremental_strategy: merge
+      unique_key: ['AD_ID','DATE','CONVERSION_REPORT_TIME']
+      partition_by: { 'field': 'DATE', 'data_type': 'date' }
+      cluster_by: ['AD_ID','DATE','CONVERSION_REPORT_TIME'] 
+
+  - name: PinterestAds
+    config:
+      materialized: incremental
+      incremental_strategy: merge
+      unique_key: ['adId','created_time']
+      partition_by: { 'field': 'created_time', 'data_type': 'timestamp', 'granularity': 'day' }
+      cluster_by: ['adId','created_time'] 
+
+  - name: PinterestCampaignsAnalytics
+    config:
+      materialized: incremental
+      incremental_strategy: merge
+      unique_key: ['CAMPAIGN_ID','DATE','CONVERSION_REPORT_TIME']
+      partition_by: { 'field': 'DATE', 'data_type': 'date' }
+      cluster_by: ['CAMPAIGN_ID','DATE','CONVERSION_REPORT_TIME'] 
+
+  - name: PinterestCampaigns
+    config:
+      materialized: incremental
+      incremental_strategy: merge
+      unique_key: ['campaign_id','created_time']
+      partition_by: { 'field': 'created_time', 'data_type': 'timestamp', 'granularity': 'day' }
+      cluster_by: ['campaign_id','created_time'] 
+
